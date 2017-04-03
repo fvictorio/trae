@@ -54,10 +54,10 @@ trae.get('https://www.google.com.ar/search', { params: { q: 'foo' } })
   });
 ```
 
-A `POST` request to `https://www.foo.com/api/posts`:
+A `POST` request to `https://jsonplaceholder.typicode.com/posts`:
 
 ```js
-trae.post('https://www.foo.com/api/posts', {
+trae.post('https://jsonplaceholder.typicode.com/posts', {
   title  : 'My Post',
   content: 'My awesome post content...'
 })
@@ -97,7 +97,7 @@ trae.patch(url[, body[, config]]);
 
 The configuration object can be used in all request methods, the following attributes are available:
 
-```javascript
+```
 {
   // Absolute or relative url of the request
   url: '/foo/bar',
@@ -183,12 +183,12 @@ The configuration for a request will be merged following this precedence rules, 
 Shorthand for `trae.defaults({baseUrl: url})`. Also returns the `baseUrl` when no params are passed.
 
 ```js
-trae.baseUrl('https://www.foo.com');
+trae.baseUrl('https://jsonplaceholder.typicode.com/posts');
 
 const baseUrl = trae.baseUrl();
-console.log(baseUrl); // 'https://www.foo.com'
+console.log(baseUrl); // 'https://jsonplaceholder.typicode.com/posts'
 
-trae.get('/baz'); // GET: https://www.foo.com/baz
+trae.get('/1'); // GET: https://jsonplaceholder.typicode.com/posts/1
 ```
 
 ### Middlewares
@@ -231,7 +231,7 @@ trae.after(fullfillMiddleware, rejectMiddleware);
 Using the above `after` middleware is the same as doing:
 
 ```js
-trae.get('/api/posts')
+trae.get('https://jsonplaceholder.typicode.com/posts/1')
   .then(fullfillMiddleware, rejectMiddleware);
 ```
 
@@ -257,18 +257,19 @@ trae.finally(finallyMiddleware);
 Creates an instance of `Trae` with its own defaults and middlewares. The API documentation applies for instances as well.
 
 ```js
-const api = trae.create({baseUrl: '/api'})
+const api = trae.create({baseUrl: 'https://jsonplaceholder.typicode.com/'})
 
-api.get('/posts') // GET: /api/posts
+api.get('posts/1') // GET: https://jsonplaceholder.typicode.com/posts/1
 ```
+
 
 The created method inherits all the defaults and middlewares from its creator.
 
 ```js
-trae.baseUrl('/api')
+trae.baseUrl('https://jsonplaceholder.typicode.com/')
 const api = trae.create()
 
-api.get('/posts') // GET: /api/posts
+api.get('posts/1') // GET: https://jsonplaceholder.typicode.com/posts/1
 
 api.defaults({ mode: 'no-cors' })
 
@@ -283,7 +284,7 @@ apiFoo.defaults() // { mode: 'no-cors', ... }
 
 The request methods returns a promise that resolves to this object:
 
-```js
+```
 {
   // body of the response
   data: { ... },

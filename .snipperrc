@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "trae": "trae"
+  },
+  "file": "README.md",
+  "timeout": 3000
+}
